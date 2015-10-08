@@ -1,0 +1,32 @@
+#!/bin/bash
+
+. ~/.config/bspwm/panel/panel_colors
+
+eval $(xdotool getmouselocation --shell)
+
+sdw="& pkill dzen"
+
+menu() {
+echo $(hostname)
+echo " Applications"
+echo "   ^ca(1, firefox $sdw) Firefox ^ca()"
+echo "   ^ca(1, pcmanfm $sdw) PCManFM ^ca()"
+echo "   ^ca(1, easytag $sdw) EasyTAG ^ca()"
+echo ""
+echo " Recently edited "
+# Get recent files from .nviminfo by vim marks.
+for file in $(cat ~/.nviminfo | grep -A 10 "File marks" | grep -oE "~.+" | uniq | head); do
+    fullfile="$(echo $file | sed "s/~/\/home\/$USER/" )"
+    echo "   ^ca(1, termite -e 'nvim $fullfile' $sdw) $file ^ca()"
+done
+echo ""
+echo " System"
+echo "   ^ca(1, ~/.config/bspwm/bin/lock.sh $sdw) Lock Screen ^ca()"
+echo "   ^ca(1, bspc quit $sdw) Quit to TTY ^ca()"
+echo "   ^ca(1, reboot $sdw) Reboot ^ca()"
+echo "   ^ca(1, poweroff $sdw) Shutdown ^ca()"
+}
+
+lines=$[$(menu | wc -l)-1]
+
+menu | dzen2 -fn "Source Code Pro-12" -e 'onstart=uncollapse;button3=exit' -x $X -y $Y -l $lines -p -w 500 -m v

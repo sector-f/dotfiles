@@ -1,0 +1,15 @@
+#!/bin/bash
+
+reboot_popup() {
+	echo "Reboot computer?"
+	echo "Yes"
+	echo "No"
+}
+
+shutdown_popup() {
+	echo "Shutdown computer?"
+	echo "Yes"
+	echo "No"
+}
+
+$1 | dzen2 -l $[$1 - 1] -e 'onstart=uncollapse' -p

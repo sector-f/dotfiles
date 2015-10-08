@@ -1,0 +1,27 @@
+#!/bin/bash
+# ~/.config/bspwm/bin/dzen_windowswitcher
+
+# get cursor position
+eval $(xdotool getmouselocation --shell)
+
+gettitles() {
+for wintitle in $(bspc query -d focused -W); do
+	echo "^ca(1, bspc window -f ${wintitle}) $(xtitle -t 70 ${wintitle})^ca()"
+done
+}
+
+printtitles() {
+	echo "Words"
+	gettitles
+}
+
+printtitles | dzen2\
+	-e 'onstart=uncollapse,hide;button1=menuprint,exit;button3=exit'\
+	-l $(gettitles | wc -l)\
+	-h 30\
+	-y 2\
+ 	-p\
+ 	-fn "Source Code Pro-12"\
+ 	-ta c\
+	-sa c\
+	-m v\
