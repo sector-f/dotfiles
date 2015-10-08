@@ -1,0 +1,115 @@
+#
+# bspwm hotkeys
+#
+
+super + alt + Escape
+	bspc quit
+
+super + w
+	bspc window -c
+
+super + t
+	bspc desktop -l next
+
+super + b
+	bspc desktop -B
+
+super + {s,f}
+	bspc window -t {floating,fullscreen}
+
+super + Tab
+	bspc {window,desktop} -f last
+
+super + apostrophe
+	bspc window -s last
+
+#super + {o,i}
+#	bspc control --record-history off; \
+#	bspc window {older,newer} -f; \
+#	bspc control --record-history on
+
+super + y
+	bspc window -w last.manual
+
+super + m
+	bspc window -s biggest
+
+super + {_,shift + }{h,j,k,l}
+	bspc window -{f,s} {left,down,up,right}
+
+super + {_,shift + }c
+ 	bspc window -f {next,prev}
+
+super + {comma,period}
+	bspc desktop -C {backward,forward}
+
+super + bracket{left,right}
+	bspc desktop -f {prev,next}
+
+super + ctrl + {h,j,k,l}
+	bspc window -p {left,down,up,right}
+
+super + ctrl + {_,shift + }space
+	bspc {window -p cancel,desktop -c}
+
+super + alt + {h,j,k,l}
+	bspc window -e {left -10,down +10,up -10,right +10}
+
+super + alt + shift + {h,j,k,l}
+	bspc window -e {right -10,up +10,down -10,left +10}
+
+super + ctrl + {1-9}
+	bspc window -r 0.{1-9}
+
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,window -d} ^{1-9,10}
+
+~button1
+	bspc pointer -g focus
+
+super + button{1-3}
+	bspc pointer -g {move,resize_side,resize_corner}
+
+super + !button{1-3}
+	bspc pointer -t %i %i
+
+super + @button{1-3}
+	bspc pointer -u
+
+super + r
+	bspc desktop --rotate 90
+
+super + shift + r
+	bspc desktop --rotate 270
+
+super + {minus,equal}
+	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 2 )) #& echo "Window gap: $(bspc config -d focused window_gap) pixels" | dzen2 -ta l -w 180 -h 30 -x 210 -p 3 -fn "Source Code Pro-12" -bg "#141314" -fg "#CCC2A6"
+
+super + question
+	urxvt -e zsh -c "less ~/.config/sxhkd/sxhkdrc" & sleep .1 && bspc window -t floating
+
+#
+# wm independent hotkeys
+#
+
+super + Return
+	termite
+
+super + space
+	dmenu_run -h 30 -q -p "Run:" -fn "Liberation Sans 10" -nb "#141314" -nf "#CCC2AC" -sf "#CCC2AC" -sb "#543B3B" 
+
+super + e
+	pcmanfm
+
+super + o
+	firefox
+
+#super + x
+#	~/.config/bspwm/bin/lock.sh ~/.config/bspwm/icons/lock.png
+
+# make sxhkd reload its configuration files and bspwm's:
+super + Escape
+	pkill -USR1 -x sxhkd #& ~/.config/bspwm/bspwmrc
+
+ctrl + alt + x
+	pkill -f 'x11grab'
