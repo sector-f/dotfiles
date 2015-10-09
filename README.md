@@ -10,7 +10,7 @@
 
 ##Requirements
 Listed packages are for Arch, but should be available on most distributions.
-* bspwm-git (AUR) or bspwm)
+* bspwm-git (AUR) or bspwm
 * sxhkd
 * dmenu2 (AUR)
 * dzen2
