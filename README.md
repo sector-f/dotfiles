@@ -5,6 +5,8 @@
 * Panel - lemonbar (patched for xft support)
 * Launcher - dmenu2 + dzen2 application menu
 
+![Menu screenshot](http://i.imgur.com/U7FFsww.jpg)
+
 ##Requirements
 Listed packages are for Arch, but should be available on most distributions.
 * bspwm
