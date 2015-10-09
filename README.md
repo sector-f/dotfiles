@@ -1,12 +1,19 @@
 #Dotfiles
 
 ##Basics
-* Window Manager - BSPWM (Binary Space Partition Window Manager)
-* Panel - lemonbar (patched for xft support)
+* Window Manager - [BSPWM](https://github.com/baskerville/bspwm) (Binary Space Partition Window Manager)
+* Panel - [lemonbar](https://github.com/LemonBoy/bar) (patched for xft support)
 * Launcher - dmenu2 + dzen2 application menu
 * Partially borrowed from [neeasade's scripts](https://github.com/neeasade/dotfiles).
 
-![Menu screenshot](http://i.imgur.com/U7FFsww.jpg)
+![Screenshot](https://u.teknik.io/CKsetZ.png)
+
+##Features
+* Clickable workspace switcher icons
+* Displays focused window title; right-click it for window switcher (useful in monocle mode)
+* MPD control (pause/play button, previous/next song buttons)
+* Dzen2 "start button"
+* Displays number of available updates (for Arch; uses `checkupdates` from the pacman package)
 
 ##Requirements
 Listed packages are for Arch, but should be available on most distributions.
@@ -16,6 +23,7 @@ Listed packages are for Arch, but should be available on most distributions.
 * dzen2
 * [xtitle-git](https://github.com/baskerville/xtitle) (AUR)
 * xdotool
+* mpc
 * adobe-source-code-pro-fonts
 * ttf-font-awesome (AUR)
 
