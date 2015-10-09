@@ -11,6 +11,7 @@ echo $(hostname)
 echo " Applications"
 echo "   ^ca(1, firefox $sdw) Firefox ^ca()"
 echo "   ^ca(1, pcmanfm $sdw) PCManFM ^ca()"
+echo "   ^ca(1, hexchat $sdw) Hexchat ^ca()"
 echo "   ^ca(1, easytag $sdw) EasyTAG ^ca()"
 echo ""
 echo " Recently edited "
@@ -29,4 +30,4 @@ echo "   ^ca(1, poweroff $sdw) Shutdown ^ca()"
 
 lines=$[$(menu | wc -l)-1]
 
-menu | dzen2 -fn "Source Code Pro-12" -e 'onstart=uncollapse;button3=exit' -x $X -y $Y -l $lines -p -w 500 -m v
+menu | dzen2 -fn "Source Code Pro-12" -bg "#2b2b2b" -e 'onstart=uncollapse;button3=exit' -x $X -y $Y -l $lines -p -w 500 -m v
