@@ -1,0 +1,6 @@
+include /usr/share/nano/sh.nanorc #shell script highlighting
+set nowrap
+set mouse
+set morespace
+set nonewlines
+#set nohelp

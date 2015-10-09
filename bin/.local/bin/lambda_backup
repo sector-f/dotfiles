@@ -1,0 +1,18 @@
+#!/bin/bash
+orange="\\033[1;31m"
+startline="1"
+fulloutput=("${orange}       N+++++++d"          
+"${orange}       N++++++++m		 %s"         
+"${orange}        mmmh++++oN		%s"       
+"${orange}            y++++oN		%s"      
+"${orange}            h+++++s		%s"      
+"${orange}          Ny+++++++y		%s"     
+"${orange}         ms+++++++++d		%s"    
+"${orange}        h+++++yh+++++m		%s"   
+"${orange}      Ny+++++h  h++++oN		%s"   
+"${orange}     mo++++om    s++++oN	%s" 
+"${orange}    h+++++y      No++++sysos	%s"
+"${orange}  Ns++++om        N+++++++++h 	%s"
+"${orange}  hyyyyyN          m+++oshdmN	%s"
+"${orange}                    NN		%s"
+"				%s")
