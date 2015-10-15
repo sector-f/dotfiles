@@ -5,8 +5,8 @@
 " (_)_| |_|\_/ |_|_| |_| |_|_|  \___|
 
 " Tab Options
-set shiftwidth=8
-set tabstop=8
+set shiftwidth=4
+set tabstop=4
 set noexpandtab
 
 " Plugins
@@ -24,7 +24,6 @@ call plug#end()
 " Color options
 syntax enable
 set background=dark
-"colorscheme noctu
 colorscheme hybrid
 
 " Airline options
@@ -70,3 +69,6 @@ nnoremap <silent> <Right> :bn<return>
 
 " Set window title to open document name
 :set title
+
+:set wildmenu
+:set hidden

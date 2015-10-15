@@ -1,7 +1,7 @@
 #! /bin/sh
  ~/.config/bspwm/panel/panel &
 
-bspc config border_width        2
+bspc config border_width       3
 bspc config window_gap         18
 bspc config top_padding        30
 
@@ -9,10 +9,10 @@ bspc config split_ratio         0.50
 bspc config borderless_monocle  true
 bspc config gapless_monocle     true
 bspc config focus_by_distance   true
-bspc config leaf_monocle	true
+bspc config leaf_monocle	false
 
-bspc monitor -d 000 001 010 011 100 101 110 111
-# bspc monitor -d web irc term file game misc
+# bspc monitor -d 000 001 010 011 100 101 110 111
+bspc monitor -d main irc term file game misc
 # bspc monitor -d 1 2 3 4 5 6 7 8
 
 bspc rule -a Gimp follow=on floating=on

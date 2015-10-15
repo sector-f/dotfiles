@@ -23,6 +23,6 @@ xtitle -s -t 100 -f 'T%s' > "$PANEL_FIFO" &
 
 ~/.config/bspwm/panel/info.sh > "$PANEL_FIFO" &
 
-cat "$PANEL_FIFO" | ~/.config/bspwm/panel/panel_bar | lemonbar -g 1920x${PANEL_HEIGHT} -f "Source Code Pro-13" -f "FontAwesome-15" -f "font\-linux-17" -B ${COLOR_BACKGROUND} -F ${COLOR_FOREGROUND} -u 5 | sh &
+cat "$PANEL_FIFO" | ~/.config/bspwm/panel/panel_bar | lemonbar -g 1920x${PANEL_HEIGHT} -f "DejaVu Sans Mono-13" -f "FontAwesome-15" -f "FontAwesome-15" -B ${COLOR_BACKGROUND} -F ${COLOR_FOREGROUND} -u 4 | sh &
 
 wait

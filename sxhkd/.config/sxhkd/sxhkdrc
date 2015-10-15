@@ -1,6 +1,4 @@
-#
 # bspwm hotkeys
-#
 
 super + alt + Escape
 	bspc quit
@@ -96,7 +94,7 @@ super + Return
 	termite
 
 super + space
-	dmenu_run -h 30 -q -p "Run:" -fn "Liberation Sans 10" -nb "#141314" -nf "#CCC2AC" -sf "#CCC2AC" -sb "#543B3B" 
+	dmenu_run -h 30 -q -p "Run:" -fn "Liberation Sans 10" #-nb $COLOR_BACKGROUND -nf $COLOR_FOREGROUND -sf  $COLOR_FOREGROUND -sb $COLOR_BACKGROUND 
 
 super + e
 	pcmanfm

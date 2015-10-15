@@ -6,8 +6,15 @@
 AC='%{A:'           # start click area
 AB=':}'             # end click area cmd
 AE='%{A}'           # end click area
+togglefile='~/.config/bspwm/panel/toggle'
 
 . ~/.config/bspwm/panel/panel_colors
+
+# get updates every 5 minutes
+while :; do
+	checkupdates | wc -l > /tmp/.checklog
+	sleep 300
+done &
 
 declare -f block
 if [ $? = "1" ]; then
@@ -27,11 +34,21 @@ startbutton() {
 }
 
 icon() {
-    echo -n -e "%{F$pIcon}\u$1 %{F$pFG}"
+    echo -n -e "%{F$pIcon}%{T3}\u$1 %{T-}%{F$pFG}"
+}
+
+togglebutton() {
+	if [[ -n $(cat ~/.config/bspwm/panel/toggle | grep showsysinfo=false) ]]; then
+		# echo -e "%{A:sed -i 's/showsysinfo=false/showsysinfo=true/' $togglefile:}%{B${COLOR_BACKGROUND}}        \uf053 %{B-}%{A}"
+		echo "%{A:sed -i 's/showsysinfo=false/showsysinfo=true/' $togglefile:}%{B${COLOR_BACKGROUND}}  %{B-}%{A}"
+	else
+		# echo -e "%{A:sed -i 's/showsysinfo=true/showsysinfo=false/' $togglefile:}%{B${COLOR_BACKGROUND}} \uf054 %{B-}%{A}"
+		echo -e "%{A:sed -i 's/showsysinfo=true/showsysinfo=false/' $togglefile:}%{B${COLOR_BACKGROUND}}  %{B-}%{A}"
+	fi
 }
 
 clock() {
-    echo "%{B${COLOR_DARKRED}} $(date '+%I:%M %p') %{B-}"
+    echo "%{B${COLOR_HIGHLIGHT}} $(date '+%r') %{B-}"
 }
 
 volume() {
@@ -41,26 +58,27 @@ volume() {
 }
 
 mpd() {
-	cur_song=$(mpc current -f '%title%')
+	cur_song=$(mpc current -f '%artist% - %title%')
     #cur_song=$(basename "$(mpc current -f "%artist% - %title%")" | cut -c1-30 )
 
     #icon f001
     if [ -z "$cur_song" ]; then
-        echo "%{B${COLOR_DARKRED}} MPD: Stopped %{B-}"
+        echo "%{B${COLOR_HIGHLIGHT}} MPD: Stopped %{B-}"
     else
         paused=$(mpc | grep paused)
         [ -z "$paused" ] && toggle="${AC}mpc pause${AB}$(icon f04c)${AE}" ||
+            # toggle="${AC}mpc play${AB}▶${AE}"
             toggle="${AC}mpc play${AB}$(icon f04b)${AE}"
         prev="${AC}mpc prev${AB}$(icon f049)${AE}"
         next="${AC}mpc next${AB}$(icon f050)${AE}"
         cur_song="$cur_song"
-        echo "%{B${COLOR_DARKRED}} $cur_song  $prev $toggle $next %{B-}"
+        echo "%{B${COLOR_HIGHLIGHT}} MPD: ${cur_song} $prev $toggle $next %{A}%{B-}"
     fi
 }
 
 pacmanupdates() {
     command="termite -e zsh -c 'sudo pacman -Syu' & sleep .1 && bspc window -t floating"
-    echo "%{B${COLOR_DARKRED}} Updates: $(checkupdates | wc -l) %{B-}"
+	echo "%{B${COLOR_HIGHLIGHT2}} Updates: $(cat /tmp/.checklog) %{B-}"
 }
 
 #aurupdates () {
@@ -74,11 +92,16 @@ blockActive=false;
 while :; do
     buf="S"
 
-    [ -z "$*" ] && items="pacmanupdates mpd clock" \
-                || items="$@"
+	if [[ -n $(cat ~/.config/bspwm/panel/toggle | grep false) ]]; then
+	[ -z "$*" ] && items="togglebutton clock" \
+                || items="$@";
+	else
+	[ -z "$*" ] && items="togglebutton mpd pacmanupdates clock" \
+                || items="$@";
+	fi
 
     for item in $items; do
-        buf="${buf}%{U${COLOR_BACKGROUND}}%{+o}%{+u}$(block $($item))";
+        buf="${buf}%{U${COLOR_BACKGROUND}}%{-o}%{-u}$(echo $($item))";
     done
 
     echo "$buf"
@@ -89,10 +112,10 @@ while :; do
                 || items="$@"
 
     for item in $items; do
-        buf="${buf}%{U${COLOR_BACKGROUND}}%{-o}%{-u}$(block $($item))";
+        buf="${buf}%{U${COLOR_BACKGROUND}}%{-o}%{-u}$(echo $($item))";
     done
 
     echo "$buf"
 
-    sleep 1 # update interval
+    sleep 0.5 # update interval
 done

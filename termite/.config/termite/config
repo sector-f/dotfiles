@@ -4,7 +4,7 @@ audible_bell = true
 clickable_url = true
 cursor_shape = underline
 dynamic_title = true
-font = Dejavu Sans Mono 13
+font = Dejavu Sans Mono 11
 mouse_autohide = true
 scrollback_lines = 10000
 scroll_on_keystroke = true
@@ -15,7 +15,7 @@ urgent_on_bell = true
 
 #background: [90]#141314
 #background = rgba(20, 19, 20, 0.9)
-background = rgba(20, 19, 20, 1)
+background = rgba(20, 19, 20, 0.95)
 foreground = #ccc2a6
 
 #black
@@ -49,3 +49,6 @@ color14 = #586868
 #white
 color7 = #9a875f
 color15 = #917154
+
+# For neovim background
+color234 = #141314
