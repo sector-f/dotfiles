@@ -11,8 +11,8 @@ bspc config gapless_monocle     true
 bspc config focus_by_distance   true
 bspc config leaf_monocle	false
 
-# bspc monitor -d 000 001 010 011 100 101 110 111
-bspc monitor -d main irc term file game misc
+bspc monitor -d 000 001 010 011 100 101 110 111
+# bspc monitor -d main irc term file game misc
 # bspc monitor -d 1 2 3 4 5 6 7 8
 
 bspc rule -a Gimp follow=on floating=on

@@ -6,7 +6,7 @@
 AC='%{A:'           # start click area
 AB=':}'             # end click area cmd
 AE='%{A}'           # end click area
-togglefile='~/.config/bspwm/panel/toggle'
+togglefile=~/.config/bspwm/panel/toggle
 
 . ~/.config/bspwm/panel/panel_colors
 
@@ -39,16 +39,16 @@ icon() {
 
 togglebutton() {
 	if [[ -n $(cat ~/.config/bspwm/panel/toggle | grep showsysinfo=false) ]]; then
-		# echo -e "%{A:sed -i 's/showsysinfo=false/showsysinfo=true/' $togglefile:}%{B${COLOR_BACKGROUND}}        \uf053 %{B-}%{A}"
 		echo "%{A:sed -i 's/showsysinfo=false/showsysinfo=true/' $togglefile:}%{B${COLOR_BACKGROUND}}  %{B-}%{A}"
-	else
-		# echo -e "%{A:sed -i 's/showsysinfo=true/showsysinfo=false/' $togglefile:}%{B${COLOR_BACKGROUND}} \uf054 %{B-}%{A}"
+	elif [[ -n $(cat ~/.config/bspwm/panel/toggle | grep showsysinfo=true) ]]; then
 		echo -e "%{A:sed -i 's/showsysinfo=true/showsysinfo=false/' $togglefile:}%{B${COLOR_BACKGROUND}}  %{B-}%{A}"
+	else
+		echo "showsysinfo=false" >> $togglefile
 	fi
 }
 
 clock() {
-    echo "%{B${COLOR_HIGHLIGHT}} $(date '+%r') %{B-}"
+    echo "%{B${COLOR_HIGHLIGHT}} $(date '+%I:%M %p') %{B-}"
 }
 
 volume() {
