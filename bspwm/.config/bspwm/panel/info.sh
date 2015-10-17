@@ -7,7 +7,6 @@ AC='%{A:'           # start click area
 AB=':}'             # end click area cmd
 AE='%{A}'           # end click area
 togglefile=/tmp/toggle
-# togglefile=~/.config/bspwm/panel/toggle
 
 . ~/.config/bspwm/panel/panel_colors
 
@@ -50,11 +49,27 @@ togglebutton() {
 
 capslock() {
 	if [[ -n $(xset -q | sed -n 's/\(on\|off\).*/\1/;4p' | grep on) ]]; then
-		echo "%{B$COLOR_URGENT_FG} Capslock On %{B-}"
+		case $capslockcounter in
+			[0-1])
+				echo "%{B$COLOR_URGENT_FG} Capslock On %{B-}"
+				((capslockcounter++))
+				echo $capslockcounter
+				;;
+			[2-4])
+				echo "%{B$COLOR_BACKGROUND} Capslock On %{B-}"
+				((capslockcounter++))
+				echo $capslockcounter
+				;;
+			*)
+				echo "%{B$COLOR_URGENT_FG} Capslock On %{B-}"
+				echo 0
+				;;
+		esac
 	else
 		echo ""
 	fi
 }
+
 
 clock() {
     echo "%{B${COLOR_HIGHLIGHT}} $(date '+%I:%M %p') %{B-}"
@@ -98,7 +113,10 @@ pacmanupdates() {
 
 #determine what to display based on arguments, unless there are none, then display all.
 blockActive=false;
+
 while :; do
+	capslockcounter="$(capslock | tail -n 1 )"
+
     buf="S"
 
 	if [[ -n $(grep false $togglefile) ]]; then
@@ -110,7 +128,7 @@ while :; do
 	fi
 
     for item in $items; do
-        buf="${buf}%{U${COLOR_BACKGROUND}}%{-o}%{-u}$(echo $($item))";
+        buf="${buf}%{U${COLOR_BACKGROUND}}%{-o}%{-u}$(echo $($item | head -n 1))";
     done
 
     echo "$buf"
@@ -121,10 +139,12 @@ while :; do
                 || items="$@"
 
     for item in $items; do
-        buf="${buf}%{U${COLOR_BACKGROUND}}%{-o}%{-u}$(echo $($item))";
+        buf="${buf}%{U${COLOR_BACKGROUND}}%{-o}%{-u}$(echo $($item | head -n 1))";
     done
 
     echo "$buf"
 
-    sleep 0.5 # update interval
+	echo "capslockcounter = $capslockcounter"
+
+    sleep 0.2 # update interval
 done
