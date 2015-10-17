@@ -48,7 +48,8 @@ togglebutton() {
 }
 
 capslock() {
-	if [[ -n $(xset -q | sed -n 's/\(on\|off\).*/\1/;4p' | grep on) ]]; then
+	capslockstatus=$(xset -q | awk 'NR == 4 {print $4}')
+	if [[ $capslockstatus == on ]]; then
 		case $capslockcounter in
 			[0-1])
 				echo "%{B$COLOR_URGENT_FG} Capslock On %{B-}"
