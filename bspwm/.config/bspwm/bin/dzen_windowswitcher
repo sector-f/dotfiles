@@ -1,7 +1,7 @@
 #!/bin/bash
 # ~/.config/bspwm/bin/dzen_windowswitcher
-
-# get cursor position
+. ~/.config/bspwm/panel/panel_colors
+# get cursor position (which isn't even being used right now)
 eval $(xdotool getmouselocation --shell)
 
 gettitles() {
@@ -17,6 +17,8 @@ printtitles() {
 
 printtitles | dzen2\
 	-e 'onstart=uncollapse,hide;button1=menuprint,exit;button3=exit'\
+	-bg $(echo $COLOR_BACKGROUND | sed 's/#../#/')\
+	-fg $(echo $COLOR_FOREGROUND | sed 's/#../#/')\
 	-l $(gettitles | wc -l)\
 	-h 30\
 	-y 2\

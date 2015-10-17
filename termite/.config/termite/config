@@ -15,7 +15,9 @@ urgent_on_bell = true
 
 #background: [90]#141314
 #background = rgba(20, 19, 20, 0.9)
-background = rgba(20, 19, 20, 0.95)
+#background = rgba(20, 19, 20, 0.95)
+background = #141314
+#background = #333333
 foreground = #ccc2a6
 
 #black

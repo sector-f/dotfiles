@@ -6,7 +6,8 @@
 AC='%{A:'           # start click area
 AB=':}'             # end click area cmd
 AE='%{A}'           # end click area
-togglefile=~/.config/bspwm/panel/toggle
+togglefile=/tmp/toggle
+# togglefile=~/.config/bspwm/panel/toggle
 
 . ~/.config/bspwm/panel/panel_colors
 
@@ -16,21 +17,21 @@ while :; do
 	sleep 300
 done &
 
-declare -f block
-if [ $? = "1" ]; then
-    function block() {
-        [ ! -z $NoPadding ] && pPadding=$NoPadding
-        if [ "$blockActive" = true ] ; then
-            echo -n "%{B$pBGActiveTab}%{F$pBG}$(printf %${pPadding}s)$@$(printf %${pPadding}s)%{B$pBG} "
-        else
-            echo -n "%{B$pBGInactiveTab}%{F$pFG}$(printf %${pPadding}s)$@$(printf %${pPadding}s)%{B$pBG} "
-        fi
-    }
-    export -f block
-fi
+# declare -f block
+# if [ $? = "1" ]; then
+#     function block() {
+#         [ ! -z $NoPadding ] && pPadding=$NoPadding
+#         if [ "$blockActive" = true ] ; then
+#             echo -n "%{B$pBGActiveTab}%{F$pBG}$(printf %${pPadding}s)$@$(printf %${pPadding}s)%{B$pBG} "
+#         else
+#             echo -n "%{B$pBGInactiveTab}%{F$pFG}$(printf %${pPadding}s)$@$(printf %${pPadding}s)%{B$pBG} "
+#         fi
+#     }
+#     export -f block
+# fi
 
 startbutton() {
-	echo "%{l} %{B${COLOR_BACKGROUND}}%{F#FFA3A6AB'}${AC}~/.config/bspwm/bin/menu${AB}$(echo -e "%{T2}\uf0c9%{T-}")${AE} "
+	echo "%{l}%{B${COLOR_BACKGROUND}} ${AC}~/.config/bspwm/bin/menu${AB}$(echo -e "%{T2}\uf0c9%{T-}")${AE}  %{B-}"
 }
 
 icon() {
@@ -38,12 +39,20 @@ icon() {
 }
 
 togglebutton() {
-	if [[ -n $(cat ~/.config/bspwm/panel/toggle | grep showsysinfo=false) ]]; then
+	if [[ -n $(grep showsysinfo=false $togglefile) ]]; then
 		echo "%{A:sed -i 's/showsysinfo=false/showsysinfo=true/' $togglefile:}%{B${COLOR_BACKGROUND}}  %{B-}%{A}"
-	elif [[ -n $(cat ~/.config/bspwm/panel/toggle | grep showsysinfo=true) ]]; then
+	elif [[ -n $(grep showsysinfo=true $togglefile) ]]; then
 		echo -e "%{A:sed -i 's/showsysinfo=true/showsysinfo=false/' $togglefile:}%{B${COLOR_BACKGROUND}}  %{B-}%{A}"
 	else
 		echo "showsysinfo=false" >> $togglefile
+	fi
+}
+
+capslock() {
+	if [[ -n $(xset -q | sed -n 's/\(on\|off\).*/\1/;4p' | grep on) ]]; then
+		echo "%{B$COLOR_URGENT_FG} Capslock On %{B-}"
+	else
+		echo ""
 	fi
 }
 
@@ -63,7 +72,7 @@ mpd() {
 
     #icon f001
     if [ -z "$cur_song" ]; then
-        echo "%{B${COLOR_HIGHLIGHT}} MPD: Stopped %{B-}"
+        echo "%{B${COLOR_HIGHLIGHT2}} MPD: Stopped %{B-}"
     else
         paused=$(mpc | grep paused)
         [ -z "$paused" ] && toggle="${AC}mpc pause${AB}$(icon f04c)${AE}" ||
@@ -72,7 +81,7 @@ mpd() {
         prev="${AC}mpc prev${AB}$(icon f049)${AE}"
         next="${AC}mpc next${AB}$(icon f050)${AE}"
         cur_song="$cur_song"
-        echo "%{B${COLOR_HIGHLIGHT}} MPD: ${cur_song} $prev $toggle $next %{A}%{B-}"
+        echo "%{B${COLOR_HIGHLIGHT2}} MPD: ${cur_song} $prev $toggle $next %{A}%{B-}"
     fi
 }
 
@@ -92,11 +101,11 @@ blockActive=false;
 while :; do
     buf="S"
 
-	if [[ -n $(cat ~/.config/bspwm/panel/toggle | grep false) ]]; then
-	[ -z "$*" ] && items="togglebutton clock" \
+	if [[ -n $(grep false $togglefile) ]]; then
+	[ -z "$*" ] && items="togglebutton capslock clock" \
                 || items="$@";
 	else
-	[ -z "$*" ] && items="togglebutton mpd pacmanupdates clock" \
+	[ -z "$*" ] && items="togglebutton mpd capslock clock" \
                 || items="$@";
 	fi
 
