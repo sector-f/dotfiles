@@ -16,27 +16,19 @@ while :; do
 	sleep 300
 done &
 
-# declare -f block
-# if [ $? = "1" ]; then
-#     function block() {
-#         [ ! -z $NoPadding ] && pPadding=$NoPadding
-#         if [ "$blockActive" = true ] ; then
-#             echo -n "%{B$pBGActiveTab}%{F$pBG}$(printf %${pPadding}s)$@$(printf %${pPadding}s)%{B$pBG} "
-#         else
-#             echo -n "%{B$pBGInactiveTab}%{F$pFG}$(printf %${pPadding}s)$@$(printf %${pPadding}s)%{B$pBG} "
-#         fi
-#     }
-#     export -f block
-# fi
+# Functions for items I want to display
 
+# Launches a dzen2 menu with applications, things that were recently edited in neovim, and system shutdown options
 startbutton() {
 	echo "%{l}%{B${COLOR_BACKGROUND}} ${AC}~/.config/bspwm/bin/menu${AB}$(echo -e "%{T2}\uf0c9%{T-}")${AE}  %{B-}"
 }
 
+# Some function neeasade made to use the icon font; give the unicode number (e.g. f0c9) as an argument
 icon() {
     echo -n -e "%{F$pIcon}%{T3}\u$1 %{T-}%{F$pFG}"
 }
 
+# Used to show/hide additional items
 togglebutton() {
 	if [[ -n $(grep showsysinfo=false $togglefile) ]]; then
 		echo "%{A:sed -i 's/showsysinfo=false/showsysinfo=true/' $togglefile:}%{B${COLOR_BACKGROUND}}  %{B-}%{A}"
@@ -47,6 +39,7 @@ togglebutton() {
 	fi
 }
 
+# Flashing indicator when capslock is on; may be called "autistic" and "bloat" by some
 capslock() {
 	capslockstatus=$(xset -q | awk 'NR == 4 {print $4}')
 	if [[ $capslockstatus == on ]]; then
@@ -71,17 +64,19 @@ capslock() {
 	fi
 }
 
-
+# I really hope I don't have to tell you what this is
 clock() {
     echo "%{B${COLOR_HIGHLIGHT}} $(date '+%I:%M %p') %{B-}"
 }
 
+# Stolen from neeasade; haven't really used it much. Might work on it eventually
 volume() {
     display="$(icon f028) $(amixer get Master | sed -n 's/^.*\[\([0-9]\+%\).*$/\1/p')"
     command='xfce4-terminal -e "pavucontrol"'
     echo ${AC}$command${AB}$display${AE}
 }
 
+# If mpd is playing, this will tell you what song is playing, and give you prev/pause/play/next buttons
 mpd() {
 	cur_song=$(mpc current -f '%artist% - %title%')
     #cur_song=$(basename "$(mpc current -f "%artist% - %title%")" | cut -c1-30 )
@@ -101,31 +96,25 @@ mpd() {
     fi
 }
 
+# Tells you how out-of-date your precious "bleeding edge" computer is
 pacmanupdates() {
-    command="termite -e zsh -c 'sudo pacman -Syu' & sleep .1 && bspc window -t floating"
 	echo "%{B${COLOR_HIGHLIGHT2}} Updates: $(cat /tmp/.checklog) %{B-}"
 }
 
-#aurupdates () {
-#	aurupdates=$(eval cower -u | wc -l)
-#    command="urxvt -e zsh -c 'cower -u' & sleep .1 && bspc window -t floating"
-#    echo ${AC}$command${AB}$(icon f062)AUR: $aurupdates${AE}
-#}
-
-#determine what to display based on arguments, unless there are none, then display all.
-blockActive=false;
+# Set what items to display and where
 
 while :; do
 	capslockcounter="$(capslock | tail -n 1 )"
 
+	# Left side items
     buf="S"
 
-	if [[ -n $(grep false $togglefile) ]]; then
-	[ -z "$*" ] && items="togglebutton capslock clock" \
-                || items="$@";
+	# If we're showing less items
+	if [[ -n $(grep showsysinfo=false $togglefile) ]]; then
+		items="togglebutton capslock clock"
 	else
-	[ -z "$*" ] && items="togglebutton mpd capslock clock" \
-                || items="$@";
+	# If we're showing more items
+		items="togglebutton mpd capslock clock"
 	fi
 
     for item in $items; do
@@ -134,10 +123,10 @@ while :; do
 
     echo "$buf"
 
+	# Right side items
     buf="B"
 
-    [ -z "$*" ] && items="startbutton" \
-                || items="$@"
+	items="startbutton"
 
     for item in $items; do
         buf="${buf}%{U${COLOR_BACKGROUND}}%{-o}%{-u}$(echo $($item | head -n 1))";
@@ -145,7 +134,6 @@ while :; do
 
     echo "$buf"
 
-	echo "capslockcounter = $capslockcounter"
-
-    sleep 0.2 # update interval
+	# update interval
+    sleep 0.2
 done
