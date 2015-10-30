@@ -1,7 +1,7 @@
 # bspwm hotkeys
 
 super + alt + Escape
-	bspc quit
+	bspc quit & pkill panel
 
 super + w
 	bspc window -c

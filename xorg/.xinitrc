@@ -8,10 +8,11 @@ numlockx &
 
 compton -bz &
 
-feh --bg-fill ~/Pictures/Wallpapers/citadel.jpg &
+# feh --bg-fill ~/Pictures/Wallpapers/citadel.jpg &
+feh --bg-fill ~/Pictures/Wallpapers/redtrees-polyfy8.jpg
 
-redshift &
+redshift -l 35.4758:-79.1756 &
 
 sxhkd -f 30 &
 
-exec bspwm 
+exec bspwm
