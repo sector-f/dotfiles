@@ -66,7 +66,7 @@ capslock() {
 
 # I really hope I don't have to tell you what this is
 clock() {
-    echo "%{B${COLOR_HIGHLIGHT}} $(date '+%I:%M %p') %{B-}"
+    echo "%{B${COLOR_HIGHLIGHT}}${AC}~/.config/bspwm/bin/dzen_calendar${AB} $(date '+%I:%M %p') ${AE}%{B-}"
 }
 
 # Stolen from neeasade; haven't really used it much. Might work on it eventually
@@ -79,6 +79,7 @@ volume() {
 # If mpd is playing, this will tell you what song is playing, and give you prev/pause/play/next buttons
 mpd() {
 	cur_song=$(mpc current -f '%artist% - %title%')
+	percentage=$(mpc | awk 'NR==2 {print $4}')
     #cur_song=$(basename "$(mpc current -f "%artist% - %title%")" | cut -c1-30 )
 
     #icon f001
@@ -92,7 +93,8 @@ mpd() {
         prev="${AC}mpc prev${AB}$(icon f049)${AE}"
         next="${AC}mpc next${AB}$(icon f050)${AE}"
         cur_song="$cur_song"
-        echo "%{B${COLOR_HIGHLIGHT2}} MPD: ${cur_song} $prev $toggle $next %{A}%{B-}"
+		percentage="$percentage"
+        echo "%{B${COLOR_HIGHLIGHT2}} MPD: ${cur_song} ${percentage} $prev $toggle $next %{B-}"
     fi
 }
 

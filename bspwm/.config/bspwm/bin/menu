@@ -14,16 +14,16 @@ echo "   ^ca(1, pcmanfm $sdw) PCManFM ^ca()"
 echo "   ^ca(1, hexchat $sdw) Hexchat ^ca()"
 echo "   ^ca(1, easytag $sdw) EasyTAG ^ca()"
 echo ""
-echo " Recently edited "
+# echo " Recently edited "
 # Get recent files from .nviminfo by vim marks.
-for file in $(cat ~/.nviminfo | grep -A 10 "File marks" | grep -oE "~.+" | uniq | head); do
-    fullfile="$(echo $file | sed "s/~/\/home\/$USER/" )"
-    echo "   ^ca(1, termite -e 'nvim $fullfile' $sdw) $file ^ca()"
-done
-echo ""
+# for file in $(cat ~/.nviminfo | grep -A 10 "File marks" | grep -oE "~.+" | uniq | head); do
+    # fullfile="$(echo $file | sed "s/~/\/home\/$USER/" )"
+    # echo "   ^ca(1, termite -e 'nvim $fullfile' $sdw) $file ^ca()"
+# done
+# echo ""
 echo " System"
 echo "   ^ca(1, ~/.config/bspwm/bin/lock.sh $sdw) Lock Screen ^ca()"
-echo "   ^ca(1, bspc quit $sdw) Quit to TTY ^ca()"
+echo "   ^ca(1, bspc quit & pkill panel $sdw) Quit to TTY ^ca()"
 echo "   ^ca(1, reboot $sdw) Reboot ^ca()"
 echo "   ^ca(1, poweroff $sdw) Shutdown ^ca()"
 }

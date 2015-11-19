@@ -1,5 +1,5 @@
 #! /bin/sh
- ~/.config/bspwm/panel/panel &
+~/.config/bspwm/panel/panel &
 
 bspc config border_width       3
 bspc config window_gap         18
