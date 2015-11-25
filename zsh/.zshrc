@@ -1,11 +1,13 @@
 export PATH=/home/adam/.local/bin:$PATH
+export EDITOR=nvim
 
 #Needed for Termite
 eval $(dircolors ~/.dircolors)
 
 #Get keybinds set because zsh doesn't use inputrc
-# typeset -A key
+typeset -A key
 
+bindkey '^r' history-incremental-search-backward
 # key[Home]=${terminfo[khome]}
 # key[End]=${terminfo[kend]}
 # key[Insert]=${terminfo[kich1]}
