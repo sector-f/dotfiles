@@ -22,7 +22,7 @@ function set-prompt () {
       (main|viins) VI_MODE="%{$fg_bold[red]%}[INSERT]%{$reset_color%}" ;;
       (*)          VI_MODE="%{$fg_bold[red]%}[INSERT]%{$reset_color%}" ;;
     esac
-	PROMPT="$VI_MODE %{$fg_bold[green]%}[%~]%{$reset_color%} \$vcs_info_msg_0_
+	PROMPT="$VI_MODE %{$fg_bold[green]%}[%d]%{$reset_color%} \$vcs_info_msg_0_
 %{$fg_bold[yellow]%}>>%{$reset_color%} "
 }
 
