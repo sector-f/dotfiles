@@ -56,3 +56,5 @@ compinit
 
 # Load prompt file
 source ~/.prompt.zsh 
+
+# source ~/.zsh-syntax-highlighting.zsh
