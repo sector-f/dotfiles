@@ -101,7 +101,11 @@ ft_zle_state[overwrite]=no
 function ft-psvx() {
     if [[ ${ft_zle_state[minibuffer]} == yes ]]; then
         if [[ ${psvar[$psvmodeidx]} != *m ]]; then
-            psvar[$psvmodeidx]="${psvar[$psvmodeidx]}m"
+			case "${psvar[$psvmodeidx]}" in
+				\[NORMAL\]) psvar[$psvmodeidx]="[NORMAL+M]" ;;
+				\[REPLACE\]) psvar[$psvmodeidx]="[REPLACE+M]" ;;
+				\[INSERT\]) psvar[$psvmodeidx]="[INSERT+M]" ;;
+			esac
         fi
     else
         case ${KEYMAP} in
@@ -116,6 +120,7 @@ function ft-psvx() {
         esac
     fi
     zle 'reset-prompt'
+	zle -R
 }
 
 # This needs to be hooked into `zle-line-finish' to make sure the next
@@ -135,7 +140,7 @@ function TRAPINT() {
     ft_zle_state[minibuffer]=no
     ft-psvx-default
     zle reset-prompt 2>/dev/null
-    return 127
+    return 130
 }
 
 # If a keymap change is done, we do need a status update, obviously.
@@ -194,7 +199,7 @@ zle -N q ft-zshexit
 function ft-vi-replace() {
     ft_zle_state[overwrite]=yes
     zle vi-replace
-    # ft-psvx
+    ft-psvx
 }
 
 function ft-vi-insert() {
