@@ -3,19 +3,46 @@ autoload -U promptinit
 autoload -Uz vcs_info
 promptinit
 
+# Set this to "yes" or "no"
+# If "yes" then vcs info will be displayed above PS1
+# and you won't need $vcs_info_msg_0_ in your prompt
+vcsinfoabove="no"
+
 # git repo stuff
 
-vcs_info
-precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
-setopt prompt_subst
-zstyle ':vcs_info:git:*' formats "%{$fg_bold[yellow]%}%b%{$reset_color%} %c%u"
+if [[ $vcsinfoabove == "yes" ]]; then
+	_precmd_vcs_info () {
+		vcs_info
+		[[ -n ${vcs_info_msg_0_} ]] && {
+			print
+			print -Plr -- ${vcs_info_msg_0_} ${vcs_info_msg_1_}
+		}
+	}
+elif [[ $vcsinfoabove == "no" ]]; then
+	_precmd_vcs_info () {
+		vcs_info
+	}
+	setopt prompt_subst
+fi
 
-# vi mode stuff shamelessly taken from ft on freenode
+precmd_functions+=( _precmd_vcs_info )
+zstyle ':vcs_info:git:*' formats "%{$fg_bold[yellow]%}%b%{$reset_color%}"
+
+# Now we set the actual prompt
+# This setup allows for a two-line prompt with RPROMPT on the first line
+# rather than the last
+# Technically it's not $RPROMPT but it works the same
+
+leftprompt="%{$fg_bold[red]%}%(?..(%?%) )%{$reset_color%}%1v %{$fg_bold[green]%}[%d]%{$reset_color%} \$vcs_info_msg_0_"
+rightprompt=""
+secondline="%{$fg_bold[yellow]%}>>%{$reset_color%} "
+
+rpromptlength=$(print ${#${:-"$(print -nP $rightprompt)"}})
+() { PS1="$leftprompt$(tput hpa $((COLUMNS - $rpromptlength)))$rightprompt"$'\n'$secondline }
 
 KEYTIMEOUT=1
-PROMPT="%{$fg_bold[red]%}%(?..(%?%) )%{$reset_color%}%1v%{$reset_color%} %{$fg_bold[green]%}[%d]%{$reset_color%} \$vcs_info_msg_0_
-%{$fg_bold[yellow]%}>>%{$reset_color%} "
+
+# vi mode stuff shamelessly taken from ft on freenode (and then modified)
 
 ### vi-mode.zsh - example vi mode setup for zsh.
 ###
@@ -31,11 +58,11 @@ PROMPT="%{$fg_bold[red]%}%(?..(%?%) )%{$reset_color%}%1v%{$reset_color%} %{$fg_b
 ### available in prompts in the `%xv' expansion. It'll be one of the
 ### following strings:
 ###
-###    "i"  - insert mode
-###    "c"  - command mode
-###    "im" - insert mode, with a minibuffer being active
-###    "cm" - ditto, but for command mode
-###    "r"  - replace mode: insert mode with the overwrite bit set.
+###    "[INSERT]"  - insert mode
+###    "[NORMAL]"  - command mode
+###    "[INSERT+M]" - insert mode, with a minibuffer being active
+###    "[NORMAL+M]" - ditto, but for command mode
+###    "[REPLACE]"  - replace mode: insert mode with the overwrite bit set.
 ###
 ### The `x' is configurable via the `psvmodeidx' variable below.
 ###
@@ -90,7 +117,7 @@ typeset -gA ft_zle_state
 if [[ ${zle_default_mode} == 'cmd' ]]; then
     psvar[$psvmodeidx]='[NORMAL]'
 else
-    psvar[$psvmodeidx]='[INSERT]'
+	psvar[$psvmodeidx]="[INSERT]"
 fi
 
 # We're not in overwrite mode, when zsh starts.
@@ -270,6 +297,10 @@ function sf-open-line-below() {
 	# echo -n "$fg_bold[yellow]>>$reset_color "
 }
 
+function sf-vi-cmd-cmd() {
+    zle -M 'Use ":q<RET>" to exit the shell.'
+}
+
 # register the created widgets
 for w in \
     ft-replace-pattern \
@@ -279,6 +310,7 @@ do
 done; unset w
 
 zle -N sf-open-line-below
+zle -N sf-vi-cmd-cmd
 
 ############################################################################
 ### ALTERED KEYBINDINGS ####################################################
@@ -291,6 +323,7 @@ if [[ ${zle_use_ctrl_d} == 'yes' ]]; then
     bindkey -r '^['
 else
     bindkey -M viins '^[' ft-vi-cmd
+    bindkey -M vicmd '^[' sf-vi-cmd-cmd
 fi
 
 bindkey -M vicmd '/'   ft-vi-search-fwd

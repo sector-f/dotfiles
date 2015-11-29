@@ -55,6 +55,6 @@ compinit
 # End of lines added by compinstall
 
 # Load prompt file
-source ~/.prompt.zsh 
+source ~/.prompt.zsh
 
 # source ~/.zsh-syntax-highlighting.zsh

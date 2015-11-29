@@ -4,7 +4,7 @@ audible_bell = true
 clickable_url = true
 cursor_shape = underline
 dynamic_title = true
-font = Dejavu Sans Mono 11
+font = Dejavu Sans Mono 12
 mouse_autohide = true
 scrollback_lines = 10000
 scroll_on_keystroke = true
@@ -15,8 +15,8 @@ urgent_on_bell = true
 
 #background: [90]#141314
 #background = rgba(20, 19, 20, 0.9)
-#background = rgba(20, 19, 20, 0.95)
-background = #141314
+background = rgba(20, 19, 20, 0.95)
+#background = #141314
 #background = #333333
 foreground = #ccc2a6
 

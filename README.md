@@ -6,7 +6,7 @@
 * Launcher - dmenu2 + dzen2 application menu
 * Partially borrowed from [neeasade's scripts](https://github.com/neeasade/dotfiles).
 
-![Screenshot](https://u.teknik.io/CKsetZ.png)
+![Screenshot](http://i.imgur.com/uBsdmNO.jpg)
 
 ##Features
 * Clickable workspace switcher icons
