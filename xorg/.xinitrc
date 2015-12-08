@@ -8,7 +8,7 @@ numlockx &
 
 compton -bz &
 
-feh --bg-fill ~/Pictures/Wallpapers/maps/parchment.jpg
+feh --bg-fill ~/Pictures/Wallpapers/maps/waterman2.png &
 
 redshift -l 35.4758:-79.1756 &
 

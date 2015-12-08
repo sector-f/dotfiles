@@ -78,7 +78,8 @@ volume() {
 
 # If mpd is playing, this will tell you what song is playing, and give you prev/pause/play/next buttons
 mpd() {
-	cur_song=$(mpc current -f '%artist% - %title%')
+	cur_song=$(mpc current -f '%title%')
+	# cur_song=$(mpc current -f '%artist% - %title%')
 	percentage=$(mpc | awk 'NR==2 {print $4}')
     #cur_song=$(basename "$(mpc current -f "%artist% - %title%")" | cut -c1-30 )
 

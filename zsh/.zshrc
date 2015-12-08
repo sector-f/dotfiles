@@ -40,7 +40,8 @@ alias 'uptime'='uptime -p'
 alias 'please'='sudo $(fc -ln -1)'
 alias 'n'='ncmpcpp'
 alias 'screenfetch'='screenfetch -a lambda'
-alias 'cava'='cava -i fifo -p /tmp/mpd.fifo -b 15'
+# alias 'cava'='cava -i fifo -p /tmp/mpd.fifo -b 15'
+alias 'cava'='cava -i fifo -p /tmp/mpd.fifo'
 alias ':q'='exit'
 
 HISTFILE=~/.histfile
