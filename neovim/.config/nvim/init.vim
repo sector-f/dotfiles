@@ -10,7 +10,7 @@ set tabstop=4
 set noexpandtab
 
 " Plugins
-call plug#begin('~/.nvim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 	Plug 'tpope/vim-sensible'
 	Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 	" Plug 'easymotion/vim-easymotion'
@@ -19,6 +19,7 @@ call plug#begin('~/.nvim/plugged')
 	Plug 'tpope/vim-commentary'
 	Plug 'sheerun/vim-polyglot'
 	Plug 'w0ng/vim-hybrid'
+	Plug 'valloric/youcompleteme'
 call plug#end()
 
 " Color options
