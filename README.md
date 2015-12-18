@@ -19,6 +19,7 @@ MPD controls and capslock notifier are shown in [this webm](https://u.teknik.io/
 ##Requirements
 Listed packages are for Arch, but should be available on most distributions.
 * bspwm-git (AUR) or bspwm
+* lemonbar-xft-git (AUR)
 * sxhkd
 * dmenu2 (AUR)
 * dzen2
