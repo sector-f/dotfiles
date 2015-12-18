@@ -6,14 +6,15 @@
 * Launcher - dmenu2 + dzen2 application menu
 * Partially borrowed from [neeasade's scripts](https://github.com/neeasade/dotfiles).
 
-![Screenshot](http://i.imgur.com/d6EJOUe.jpg)
+![Screenshot1](http://i.imgur.com/vEg2G2m.jpg)
+MPD controls and capslock notifier are shown in [this webm](https://u.teknik.io/QlNBiH.webm)
 
 ##Features
 * Clickable workspace switcher icons
 * Displays focused window title; right-click it for window switcher (useful in monocle mode)
 * MPD control (pause/play button, previous/next song buttons)
+* Blinking capslock notifier
 * Dzen2 "start button"
-* Displays number of available updates (for Arch; uses `checkupdates` from the pacman package)
 
 ##Requirements
 Listed packages are for Arch, but should be available on most distributions.
