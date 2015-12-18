@@ -26,7 +26,7 @@ Listed packages are for Arch, but should be available on most distributions.
 * [xtitle-git](https://github.com/baskerville/xtitle) (AUR)
 * xdotool
 * mpc
-* adobe-source-code-pro-fonts
+* ttf-dejavu
 * ttf-font-awesome (AUR)
 
 ##Installation
