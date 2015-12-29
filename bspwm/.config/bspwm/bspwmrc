@@ -1,5 +1,6 @@
 #! /bin/sh
 ~/.config/bspwm/panel/panel 2> /dev/null &
+~/.config/bspwm/bin/mpdnotify.sh &
 
 bspc config border_width       3
 bspc config window_gap         18
