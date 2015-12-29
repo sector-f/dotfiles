@@ -6,7 +6,7 @@ DF=$(echo -e "\uf10c") # "Desktop Free," i.e. no windows
 DO=$(echo -e "\uf111") # "Desktop Occupied"
 
 COLOR_FOREGROUND='#FFF6F9FF' #Used for text
-COLOR_BACKGROUND='#9c433d' #Red
+COLOR_BACKGROUND='#FF9C433d' #Red
 
 #COLOR_LIGHTRED='#FFB2151B'
 COLOR_LIGHTRED='#FF916255'

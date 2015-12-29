@@ -1,6 +1,6 @@
 #!/bin/bash
 # ~/.config/bspwm/bin/dzen_windowswitcher
-. ~/.config/bspwm/panel/panel_colors
+. ~/.config/bspwm/themes/theme
 # get cursor position (which isn't even being used right now)
 eval $(xdotool getmouselocation --shell)
 

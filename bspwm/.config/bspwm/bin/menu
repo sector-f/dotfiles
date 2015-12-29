@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ~/.config/bspwm/panel/panel_colors
+. ~/.config/bspwm/themes/theme
 
 eval $(xdotool getmouselocation --shell)
 
