@@ -8,7 +8,7 @@ AB=':}'             # end click area cmd
 AE='%{A}'           # end click area
 togglefile=/tmp/toggle
 
-. ~/.config/bspwm/panel/panel_colors
+. ~/.config/bspwm/themes/theme
 
 # get updates every 5 minutes
 while :; do

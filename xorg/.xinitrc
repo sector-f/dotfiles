@@ -2,13 +2,13 @@
 
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
+dunst &
+
 xsetroot -cursor_name left_ptr &
 
 numlockx &
 
 compton -bz &
-
-feh --bg-fill ~/Pictures/Wallpapers/maps/waterman2.png &
 
 redshift -l 35.4758:-79.1756 &
 

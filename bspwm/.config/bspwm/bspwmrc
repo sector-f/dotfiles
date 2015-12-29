@@ -1,5 +1,5 @@
 #! /bin/sh
-~/.config/bspwm/panel/panel &
+~/.config/bspwm/panel/panel 2> /dev/null &
 
 bspc config border_width       3
 bspc config window_gap         18
@@ -12,12 +12,7 @@ bspc config focus_by_distance   true
 bspc config leaf_monocle	false
 
 bspc monitor -d 000 001 010 011 100 101 110 111
-# bspc monitor -d main irc term file game misc
-# bspc monitor -d 1 2 3 4 5 6 7 8
 
-bspc rule -a Gimp follow=on floating=on
 bspc rule -a Hexchat desktop=^2
-#bspc rule -a mplayer2 floating=on
-#bspc rule -a Kupfer.py focus=on
-#bspc rule -a Screenkey manage=off
 
+feh --bg-fill ~/.config/bspwm/themes/wallpaper

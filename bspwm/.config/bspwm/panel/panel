@@ -4,7 +4,7 @@
 #General stuff
 
 PANEL_FIFO=/tmp/panel-fifo
-. ~/.config/bspwm/panel/panel_colors
+. ~/.config/bspwm/themes/theme
 
 if [ $(pgrep -cx panel) -gt 1 ] ; then
 	printf "%s\n" "The panel is already running." >&2
