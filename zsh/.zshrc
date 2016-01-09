@@ -1,6 +1,3 @@
-export PATH=/home/adam/.local/bin:$PATH
-export EDITOR=nvim
-
 #Needed for Termite
 eval $(dircolors ~/.dircolors)
 
@@ -44,8 +41,8 @@ alias 'cava'='cava -i fifo -p /tmp/mpd.fifo'
 alias ':q'='exit'
 
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=5000
+SAVEHIST=5000
 
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/adam/.zshrc'

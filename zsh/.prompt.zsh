@@ -28,6 +28,9 @@ fi
 precmd_functions+=( _precmd_vcs_info )
 zstyle ':vcs_info:git:*' formats "%{$fg_bold[yellow]%}%b%{$reset_color%}"
 
+# Indicator for when I'm using ssh
+[[ -n "$SSH_TTY" ]] && ssh="ssh>>"
+
 # Now we set the actual prompt
 # This setup allows for a two-line prompt with RPROMPT on the first line
 # rather than the last
@@ -35,7 +38,7 @@ zstyle ':vcs_info:git:*' formats "%{$fg_bold[yellow]%}%b%{$reset_color%}"
 
 leftprompt="%{$fg_bold[red]%}%(?..(%?%) )%{$reset_color%}%1v %{$fg_bold[green]%}[%d]%{$reset_color%} \$vcs_info_msg_0_"
 rightprompt=""
-secondline="%{$fg_bold[yellow]%}>>%{$reset_color%} "
+secondline="%{$fg_bold[yellow]%}${ssh:->>}%{$reset_color%} "
 
 rpromptlength=$(print ${#${:-"$(print -nP $rightprompt)"}})
 () { PS1="$leftprompt$(tput hpa $((COLUMNS - $rpromptlength)))$rightprompt"$'\n'$secondline }
