@@ -29,7 +29,7 @@ precmd_functions+=( _precmd_vcs_info )
 zstyle ':vcs_info:git:*' formats "%{$fg_bold[yellow]%}%b%{$reset_color%}"
 
 # Indicator for when I'm using ssh
-[[ -n "$SSH_TTY" ]] && ssh="ssh>>"
+[[ -n "$SSH_CONNECTION" ]] && ssh="ssh>>"
 
 # Now we set the actual prompt
 # This setup allows for a two-line prompt with RPROMPT on the first line
@@ -382,5 +382,8 @@ if [[ ${zle_ins_more_like_emacs} == 'yes' ]]; then
     bindkey -M viins '^h'  backward-delete-char
     bindkey -M viins '^?'  backward-delete-char
 fi
+
+bindkey -M viins '^[[3~' delete-char
+bindkey -M vicmd '^[[3~' delete-char
 
 true
