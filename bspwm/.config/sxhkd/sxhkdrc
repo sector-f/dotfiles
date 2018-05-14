@@ -1,113 +1,142 @@
-# bspwm hotkeys
-
-super + alt + Escape
-	bspc quit & pkill panel
-
-super + w
-	bspc window -c
-
-super + t
-	bspc desktop -l next
-
-super + b
-	bspc desktop -B
-
-super + {s,f}
-	bspc window -t {floating,fullscreen}
-
-super + Tab
-	bspc {window,desktop} -f last
-
-super + apostrophe
-	bspc window -s last
-
-#super + {o,i}
-#	bspc control --record-history off; \
-#	bspc window {older,newer} -f; \
-#	bspc control --record-history on
-
-super + y
-	bspc window -w last.manual
-
-super + m
-	bspc window -s biggest
-
-super + {_,shift + }{h,j,k,l}
-	bspc window -{f,s} {left,down,up,right}
-
-super + {_,shift + }c
- 	bspc window -f {next,prev}
-
-super + {comma,period}
-	bspc desktop -C {backward,forward}
-
-super + bracket{left,right}
-	bspc desktop -f {prev,next}
-
-super + ctrl + {h,j,k,l}
-	bspc window -p {left,down,up,right}
-
-super + ctrl + {_,shift + }space
-	bspc {window -p cancel,desktop -c}
-
-super + alt + {h,j,k,l}
-	bspc window -e {left -10,down +10,up -10,right +10}
-
-super + alt + shift + {h,j,k,l}
-	bspc window -e {right -10,up +10,down -10,left +10}
-
-super + ctrl + {1-9}
-	bspc window -r 0.{1-9}
-
-super + {_,shift + }{1-9,0}
-	bspc {desktop -f,window -d} ^{1-9,10}
-
-~button1
-	bspc pointer -g focus
-
-super + button{1-3}
-	bspc pointer -g {move,resize_side,resize_corner}
-
-super + !button{1-3}
-	bspc pointer -t %i %i
-
-super + @button{1-3}
-	bspc pointer -u
-
-super + r
-	bspc desktop --rotate 90
-
-super + shift + r
-	bspc desktop --rotate 270
-
-super + {minus,equal}
-	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 2 )) #& echo "Window gap: $(bspc config -d focused window_gap) pixels" | dzen2 -ta l -w 180 -h 30 -x 210 -p 3 -fn "Source Code Pro-12" -bg "#141314" -fg "#CCC2A6"
-
-super + question
-	urxvt -e zsh -c "less ~/.config/sxhkd/sxhkdrc" & sleep .1 && bspc window -t floating
-
 #
 # wm independent hotkeys
 #
 
+# terminal emulator
 super + Return
 	termite
 
+# program launcher
 super + space
-	dmenu_run -h 30 -q -p "Run:" -fn "Liberation Sans 10" #-nb $COLOR_BACKGROUND -nf $COLOR_FOREGROUND -sf  $COLOR_FOREGROUND -sb $COLOR_BACKGROUND 
+	dmenu_run -h 30 -q -p "Run:" -fn "Liberation Sans 10" #-nb $COLOR_BACKGROUND -nf $COLOR_FOREGROUND -sf  $COLOR_FOREGROUND -sb $COLOR_BACKGROUND
 
-super + e
-	pcmanfm
-
-super + o
-	firefox
-
-#super + x
-#	~/.config/bspwm/bin/lock.sh ~/.config/bspwm/icons/lock.png
-
-# make sxhkd reload its configuration files and bspwm's:
+# make sxhkd reload its configuration files:
 super + Escape
-	pkill -USR1 -x sxhkd #& ~/.config/bspwm/bspwmrc
+	pkill -USR1 -x sxhkd
 
 ctrl + alt + x
 	pkill -f 'x11grab'
+
+#
+# bspwm hotkeys
+#
+
+# quit bspwm normally
+super + alt + Escape
+	pkill admiral; bspc quit; wallshuffle_kill.sh
+
+# close and kill
+super + {_,shift + }w
+	bspc node -{c,k}
+
+# alternate between the tiled and monocle layout
+super + m
+	bspc desktop -l next
+
+# if the current node is automatic, send it to the last manual, otherwise pull the last leaf
+super + y
+	bspc query -N -n focused.automatic && bspc node -n last.!automatic || bspc node last.leaf -n focused
+
+# swap the current node and the biggest node
+super + g
+	bspc node -s biggest
+
+#
+# state/flags
+#
+
+# set the window state
+super + {t,shift + t,s,f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# set the node flags
+super + ctrl + {x,y,z}
+	bspc node -g {locked,sticky,private}
+
+#
+# focus/swap
+#
+
+# focus the node in the given direction
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+# focus the node for the given path jump
+super + {p,b,comma,period}
+	bspc node -f @{parent,brother,first,second}
+
+# focus the next/previous node
+super + {_,shift + }c
+	bspc node -f {next,prev}
+
+# focus the next/previous desktop
+super + {Left,Right}
+	bspc desktop -f {prev,next}
+# super + bracket{left,right}
+# 	bspc desktop -f {prev,next}
+
+# focus the last node/desktop
+super + {grave,Tab}
+	bspc {node,desktop} -f last
+
+# focus the older or newer node in the focus history
+super + {o,i}
+	bspc wm -h off; \
+	bspc node {older,newer} -f; \
+	bspc wm -h on
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+#
+# preselect
+#
+
+# preselect the direction
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#
+# resize tiled/floating
+#
+
+# expand the tiled space in the given direction
+super + alt + {h,j,k,l}
+	bspc node {@west -r -10,@south -r +10,@north -r -10,@east -r +10}
+
+# contract the tiled space in the given direction
+super + alt + shift + {h,j,k,l}
+	bspc node {@east -r -10,@north -r +10,@south -r -10,@west -r +10}
+
+# move a floating window
+# super + {Left,Down,Up,Right}
+# 	xdo move {-x -20,-y +20,-y -20,-x +20}
+
+#
+# pointer focus/move/resize
+#
+
+# focus
+~button1
+	bspc pointer -g focus
+
+# start move/resize
+super + button{1-3}
+	; bspc pointer -g {move,resize_side,resize_corner}
+
+# end move/resize
+super + @button{1-3}
+	bspc pointer -u
