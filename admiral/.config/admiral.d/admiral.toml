@@ -1,0 +1,59 @@
+[admiral]
+# items = ["black", "left", "buffer", "workspaces",
+#          "center", "title",
+#          "right", "capslock", "red", "buffer", "clock", "buffer"]
+
+items = ["black", "left", "black", "buffer", "black", "workspaces",
+         "black", "center", "black", "title",
+         "black", "right", "black", "capslock", "red", "buffer", "clock", "buffer", "color_reset", "black"]
+
+[workspaces]
+path = "./workspaces 0"
+
+[title]
+path = "xtitle -s -t 100"
+
+[expand]
+path = "./expand.sh"
+
+[capslock]
+path = "./capslock.sh"
+
+[clock]
+path = "date '+%-I:%M %p'"
+reload = 1
+
+#######################
+# Lemonbar Formatting #
+#######################
+[left]
+path = "echo '%{l}'"
+static = true
+
+[center]
+path = "echo '%{c}'"
+static = true
+
+[right]
+path = "echo '%{r}'"
+static = true
+
+[buffer]
+path = "echo ' '"
+static = true
+
+##########
+# Colors #
+##########
+
+[black]
+path = "echo '%{B#FF141314}'"
+static = true
+
+[red]
+path = "echo '%{B#FF665B5B}'"
+static = true
+
+[color_reset]
+path = "echo '%{B-}'"
+static = true
