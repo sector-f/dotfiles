@@ -1,6 +1,14 @@
 #! /bin/sh
-~/.config/bspwm/panel/panel 2> /dev/null &
-~/.config/bspwm/bin/mpdnotify.sh &
+
+################
+# BSPWM Config #
+################
+
+bspwmdir="${XDG_CONFIG_HOME:-$HOME/.config}"/bspwm
+# source "$bspwmdir"/themes/theme
+
+# $bspwmdir/panel/panel 2> /dev/null &
+# $bspwmdir/bspwm/bin/mpdnotify.sh &
 
 bspc config border_width       3
 bspc config window_gap         18
@@ -12,8 +20,26 @@ bspc config gapless_monocle     true
 bspc config focus_by_distance   true
 bspc config leaf_monocle	false
 
-bspc monitor -d 000 001 010 011 100 101 110 111
+# for monitor in $(bspc query -M); do
+# 	bspc monitor "$monitor" -d 000 001 010 011 100 101 110 111
+# done
 
-bspc rule -a Hexchat desktop=^2
+bspc monitor "DVI-I-1" -d 000 001 010 011 100 101 110 111
+bspc monitor "DVI-D-0" -d 0 1 2 3 4 5 6 7
 
-feh --bg-fill ~/.config/bspwm/themes/wallpaper
+# bspc config -m DVI-D-0 top_padding 0
+
+##############
+# Bar Config #
+##############
+
+/home/adam/.config/admiral.d/admiral.sh &
+/home/adam/.config/admiral.d/secondary_admiral.sh &
+
+#############
+# Wallpaper #
+#############
+
+# eval $(echo "$bspwmdir/bin/wallshuffle.sh $WALLPAPER") &
+
+# $bspwmdir/bin/wallshuffle.sh $WALLPAPER
